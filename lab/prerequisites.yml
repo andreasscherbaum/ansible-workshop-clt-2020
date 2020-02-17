@@ -21,7 +21,7 @@
       from: "Andreas Scherbaum <ads@wars-nicht.de>"
       to: "{{ _attendee['name'] }}"
       charset: utf8
-      subject: "CLT 2019 Ansible Workshop - Vorbereitungen"
+      subject: "CLT 2020 Ansible Workshop - Vorbereitungen"
       body: "{{lookup('file', 'templates/prereq_mail.txt')}}"
     loop: "{{ attendees }}"
     loop_control:

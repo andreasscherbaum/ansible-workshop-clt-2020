@@ -1,7 +1,7 @@
 
 Hallo,
 
-herzlich willkommen zum Workshop "Server mit Ansible verwalten" beim CLT 2019!
+herzlich willkommen zum Workshop "Server mit Ansible verwalten" beim CLT 2020!
 
 Um zu Beginn des Workshops startklar zu sein und sofort loslegen zu können, bitten wir dich, folgende Dinge auf deinem Laptop vorzubereiten:
 
@@ -13,12 +13,12 @@ Um zu Beginn des Workshops startklar zu sein und sofort loslegen zu können, bit
     - ansible in der Version 2.x (z.B. Ubuntu: sudo apt-get install ansible)
       - Test: ansible --version
   - Checke das git-Repository für den Workshop aus:
-    - git clone https://github.com/andreasscherbaum/ansible-workshop-clt-2019
+    - git clone https://github.com/andreasscherbaum/ansible-workshop-clt-2020
 
 Unmittelbar vor dem Workshop senden wir dir eine zweite Email mit weiteren Hinweisen sowie Zugangsdaten, die du während des Workshops brauchen wirst.
 
-Der Workshop findet am Samstag, dem 16.03.19, um 10:00 Uhr im Raum W2 statt (siehe auch https://chemnitzer.linux-tage.de/2019/de/programm/beitrag/130).
+Der Workshop findet am Sonntag, dem 15.03.2020, um 10:00 Uhr im Raum W2 statt (siehe auch https://chemnitzer.linux-tage.de/2020/de/programm/beitrag/125).
 
-Für Rückfragen wendest Du dich bitte an clt19-ansible@kubieziel.de oder sprichst einen von uns auf dem CLT einfach an.
+Für Rückfragen wendest Du dich bitte an clt20-ansible@kubieziel.de oder sprichst einen von uns auf dem CLT einfach an.
 
 Viel Spaß beim Workshop wünschen Dir Jens & Andreas!

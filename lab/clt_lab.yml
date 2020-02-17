@@ -302,7 +302,7 @@
       from: "Andreas Scherbaum <ads@wars-nicht.de>"
       to: "{{ item.tagged_instances[0].tags.Owner }}"
       charset: utf8
-      subject: "CLT 2019 Ansible Workshop - Zugangsdaten"
+      subject: "CLT 2020 Ansible Workshop - Zugangsdaten"
       body: "{{lookup('file', 'templates/creds_mail.txt')}}"
       attach: [ "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/inventory",  "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/key.pem", "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/ansible.cfg" ]
     when: not lookup('first_found', dict(files = [ playbook_dir + '/' + item.tagged_instances[0].tags.Name + '/mailsent.txt' ], skip = true))
