@@ -5,11 +5,12 @@
 ## Durchführung
 
 ```
-ssh -o UserKnownHostsFile=/dev/null -i key.pem ubuntu@<IP Adresse>
+./connect-db.sh
 ```
 
-Die IP-Adresse(n) der Maschine(n) sind in der Datei _inventory_ zu finden.
-
+```
+./connect-web.sh
+```
 
 ## gewünschtes Ergebnis
 
