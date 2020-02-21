@@ -50,10 +50,14 @@ Hinweis: wir als Vortragende wissen nicht, wie viele Plätze im Workshop noch fr
     ```console
     cd ansible-workshop-clt-2020
     ```
-* Speichern der drei Dateien `ansible.cfg`, `inventory` und `key.pem` aus der Email mit den Zugangsdaten in das Verzeichnis `ansible-workshop-clt-2020`
-* Anpassen der Permissions für `key.pem`:
+* Speichern der fünf Dateien `ansible.cfg`, `inventory`, `connect-db.sh`, `connect-web.sh` und `key.pem` aus der Email mit den Zugangsdaten in das Verzeichnis `ansible-workshop-clt-2020`
+* Anpassen der Zugriffsrechte für `key.pem`:
     ```console
     chmod 0600 key.pem
+    ```
+* Anpassen der Zugriffsrechte für `connect-db.sh` und `connect-web.sh`:
+    ```console
+    chmod 0700 connect-db.sh connect-web.sh
     ```
 * Setzen der Umgebungsvariable `ANSIBLE_CONFIG`:
     ```console
