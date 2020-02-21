@@ -372,25 +372,54 @@
         label: "{{ item.item._attendee.name|default('') }} - {{ item.item._attendee.region|default('') }}"
     when: ansible_version.full >= "2.8.0"
 
-  - name: send email
-    mail:
-      from: "Andreas Scherbaum <ads@wars-nicht.de>"
-      to: "{{ item.tagged_instances[0].tags.Owner }}"
-      charset: utf8
-      subject: "CLT 2020 Ansible Workshop - Zugangsdaten"
-      body: "{{lookup('file', 'templates/creds_mail.txt')}}"
-      attach: [ "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/inventory",  "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/key.pem", "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/ansible.cfg" ]
-    when: not lookup('first_found', dict(files = [ playbook_dir + '/' + item.tagged_instances[0].tags.Name + '/mailsent.txt' ], skip = true))
-    loop: "{{ ec2_instances.results }}"
-    loop_control:
-      label: "{{ item._ansible_item_label }}"
+  - block:
+    - name: send email
+      mail:
+        from: "Andreas Scherbaum <ads@wars-nicht.de>"
+        to: "{{ item.tagged_instances[0].tags.Owner }}"
+        charset: utf8
+        subject: "CLT 2020 Ansible Workshop - Zugangsdaten"
+        body: "{{lookup('file', 'templates/creds_mail.txt')}}"
+        attach: [ "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/inventory",  "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/key.pem", "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/ansible.cfg" ]
+      when: not lookup('first_found', dict(files = [ playbook_dir + '/' + item.tagged_instances[0].tags.Name + '/mailsent.txt' ], skip = true))
+      loop: "{{ ec2_instances.results }}"
+      loop_control:
+        label: "{{ item._ansible_item_label|default('') }}"
 
-  - name: mark email as sent
-    local_action:
-      module: copy
-      content: "Email was sent"
-      dest: "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/mailsent.txt"
-      mode: 0600
-    loop: "{{ ec2_instances.results }}"
-    loop_control:
-      label: "{{ item._ansible_item_label }}"
+    - name: mark email as sent
+      local_action:
+        module: copy
+        content: "Email was sent"
+        dest: "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/mailsent.txt"
+        mode: 0600
+      loop: "{{ ec2_instances.results }}"
+      loop_control:
+        label: "{{ item._ansible_item_label|default('') }}"
+
+    when: ansible_version.full < "2.8.0"
+
+  - block:
+    - name: send email
+      mail:
+        from: "Andreas Scherbaum <ads@wars-nicht.de>"
+        to: "{{ item.tagged_instances[0].tags.Owner }}"
+        charset: utf8
+        subject: "CLT 2020 Ansible Workshop - Zugangsdaten"
+        body: "{{lookup('file', 'templates/creds_mail.txt')}}"
+        attach: [ "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/inventory",  "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/key.pem", "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/ansible.cfg" ]
+      when: not lookup('first_found', dict(files = [ playbook_dir + '/' + item.tagged_instances[0].tags.Name + '/mailsent.txt' ], skip = true))
+      loop: "{{ ec2_instances.results }}"
+      loop_control:
+        label: "{{ item.item._attendee.name|default('') }} - {{ item.item._attendee.region|default('') }}"
+
+    - name: mark email as sent
+      local_action:
+        module: copy
+        content: "Email was sent"
+        dest: "{{ playbook_dir }}/{{ item.tagged_instances[0].tags.Name }}/mailsent.txt"
+        mode: 0600
+      loop: "{{ ec2_instances.results }}"
+      loop_control:
+        label: "{{ item.item._attendee.name|default('') }} - {{ item.item._attendee.region|default('') }}"
+
+    when: ansible_version.full >= "2.8.0"
