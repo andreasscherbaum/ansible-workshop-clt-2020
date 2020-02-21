@@ -302,7 +302,7 @@
       user_data: "{{lookup('file', 'user_data.sh')}}"
       vpc_subnet_id: "{{ subnet_id[item._attendee.region] }}"
       group: [ "{{ infra_name }}" ]
-      wait: yes
+      wait: no
     loop: "{{ ec2_keys.results }}"
     register: ec2_instances
     loop_control:
@@ -349,7 +349,6 @@
       loop_control:
         label: "{{ item.item._attendee.name|default('') }} - {{ item.item._attendee.region|default('') }}"
     when: ansible_version.full >= "2.8.0"
-
 
   - block:
     - name: create connect script for webserver
