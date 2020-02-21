@@ -10,6 +10,12 @@
 
   tasks:
 
+  - name: Check version
+    fail:
+      msg: "{{ ansible_version.full }}"
+    when: ansible_version.full > "2.9"
+
+
   # the EC2 module does not play well with a proxy
   - name: verify that proxy is not set
     fail:
@@ -61,14 +67,27 @@
       loop_var: _region
       label: "{{ _region }}"
 
-  - name: extract VPC information
-    set_fact:
-      vpc_id: "{{ vpc_id | default({}) | combine( { _vpc._ansible_item_label: _vpc.vpcs.0.vpc_id } ) }}"
-    loop: "{{ vpcs.results }}"
-    when: _vpc.vpcs.0 is defined
-    loop_control:
-      loop_var: _vpc
-      label: "{{ _vpc._ansible_item_label }}"
+  - block:
+    - name: extract VPC information (< 2.8)
+      set_fact:
+        vpc_id: "{{ vpc_id | default({}) | combine( { _vpc._ansible_item_label: _vpc.vpcs.0.vpc_id } ) }}"
+      loop: "{{ vpcs.results }}"
+      when: _vpc.vpcs.0 is defined
+      loop_control:
+        loop_var: _vpc
+        label: "{{ _vpc._ansible_item_label|default('') }}"
+    when: ansible_version.full < "2.8.0"
+
+  - block:
+    - name: extract VPC information (>= 2.8)
+      set_fact:
+        vpc_id: "{{ vpc_id | default({}) | combine( { _vpc._region: _vpc.vpcs.0.vpc_id } ) }}"
+      loop: "{{ vpcs.results }}"
+      when: _vpc.vpcs.0 is defined
+      loop_control:
+        loop_var: _vpc
+        label: "{{ _vpc._region|default('') }}"
+    when: ansible_version.full >= "2.8.0"
 
   - name: remove security groups
     ec2_group:
