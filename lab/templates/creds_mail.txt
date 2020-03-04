@@ -12,7 +12,7 @@ Ansonsten wechselst Du bitte einfach nur in das ausgecheckte Repository und aktu
 
 Für den reibungslosen Start in den Workshop führe nun bitte noch im ausgecheckten Repository (ansible-workshop-clt-2020) folgende Schritte aus:
 
-  - Speichere die fünf Dateien im Anhang dieser im Verzeichnis "ansible-workshop-clt-2020"
+  - Speichere die fünf Dateien im Anhang dieser Mail im Verzeichnis "ansible-workshop-clt-2020"
   - chmod 0600 key.pem
   - chmod 0700 connect-db.sh connect-web.sh
   - export ANSIBLE_CONFIG=$(pwd)
