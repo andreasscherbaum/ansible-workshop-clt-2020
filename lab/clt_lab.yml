@@ -302,7 +302,7 @@
       user_data: "{{lookup('file', 'user_data.sh')}}"
       vpc_subnet_id: "{{ subnet_id[item._attendee.region] }}"
       group: [ "{{ infra_name }}" ]
-      wait: no
+      wait: yes
     loop: "{{ ec2_keys.results }}"
     register: ec2_instances
     loop_control:
